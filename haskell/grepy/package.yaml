@@ -21,8 +21,11 @@ description:         Please see the README on GitHub at <https://github.com/gith
 
 dependencies:
 - base >= 4.7 && < 5
-- optparse-applicative
+# - optparse-applicative
+- text
+- regex-base
 - regex-tdfa
+# - regex-pcre
 
 ghc-options:
 - -Wall
