@@ -1,36 +1,55 @@
 module ArgsParser (
-    parseOptions
+    Options(..),
+    parserOptions
 ) where
 
 import Options.Applicative
 
-count :: Parser Bool
-count = switch
+data Options = Count FilePath
+             | Recursive
+             | Exclude FilePath
+             | WordRegex
+             deriving (Show)
+
+count :: Parser Options
+count = Count <$> strOption
     ( long "count"
     <> short 'c'
     <> help "Mostra a contagem de linhas casadas"
     )
 
-recursive :: Parser Bool
-recursive = switch
+recursive :: Parser Options
+recursive = flag' Recursive
     ( long "recursive"
     <> short 'r'
     <> help "Aplica o casamento do padrão recursivamente em um diretório"
     )
 
-wordregex :: Parser Bool
-wordregex = switch
+wordregex :: Parser Options
+wordregex = flag' WordRegex
     ( long "wordregex"
     <> short 'w'
     <> help "Busca o padrão em palavras"
     )
 
-exclude :: Parser Input
-exclude = FileInput <$> strOption
+exclude :: Parser Options
+exclude = Exclude <$> strOption
     ( long "exclude"
     <> short 'e'
     <> help "Desconsidera todo o conteudo de um arquivo"
     )
 
+optionsParser :: Parser Options
+optionsParser = count
+            <|> recursive
+            <|> wordregex
+            <|> exclude
+
 parserOptions :: IO Options
-parserOptions = execParser parser
+parserOptions = execParser opts
+    where
+      opts = info (optionsParser <**> helper)
+        ( fullDesc 
+       <> progDesc "A simple program to demonstrate command-line argument parsing in Haskell" 
+       <> header "haskell-arg-parser - a simple argument parser example"
+        )
