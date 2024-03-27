@@ -5,18 +5,21 @@ module ArgsParser (
 
 import Options.Applicative
 
-data Options = Count FilePath
+data Options = Count (Maybe (Either FilePath String))
              | Recursive
              | Exclude FilePath
              | WordRegex
              deriving (Show)
 
 count :: Parser Options
-count = Count <$> strOption
+count = Count <$> optional (eitherInput <$> strOption
     ( long "count"
     <> short 'c'
     <> help "Mostra a contagem de linhas casadas"
-    )
+    ))
+    where 
+        eitherInput "" = Nothing
+        eitherInput fp = Just (Left fp)
 
 recursive :: Parser Options
 recursive = flag' Recursive
