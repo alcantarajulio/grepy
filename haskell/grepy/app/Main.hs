@@ -10,5 +10,7 @@ main :: IO ()
 main = do
     args <- getArgs
     case args of
-        [command] -> dispatch command 
-        _ -> dispatch "help"
+        [command, pattern, path] -> dispatch command pattern (Just path)
+        -- (NOTE: winiciusallan) This match must receive the file content from stdin
+        [command, pattern] -> dispatch command pattern Nothing
+        _ -> dispatch "help" "" Nothing
