@@ -43,6 +43,8 @@ library
 executable grepy-exe
   main-is: Main.hs
   other-modules:
+      CommandParser
+      Utils
       Count
       Paths_grepy
   autogen-modules:
