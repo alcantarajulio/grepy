@@ -1,18 +1,28 @@
-# Documentação | Grepy
-O `grepy` é uma implementação simplificada do comando `grep` do Linux em Haskell, utilizando como principal biblioteca `regex-tdfa`. Ele busca por padrões em arquivos e imprime as linhas que contêm esses padrões.
+<h1 align="center">Grepy</h1>
+
+O `grepy` é uma implementação simplificada do comando `grep`, do Linux, em Haskell. Ele busca por padrões especificados pelo usuário em um dado arquivo ou texto.
 
 ## Requisitos
-  * GHC (Glasgow Haskell Compiler)
-  * Biblioteca regex-tdfa
-  * Colocar as outra bibliotecas necessárias
+  * [Haskell Stack](https://docs.haskellstack.org/en/stable/install_and_upgrade/)
+  * [GHC (Glasgow Haskell Compiler)](https://www.haskell.org/downloads/)
 
 ## Compilação e Execução
- Em vez de gerar um executável separado, o `grepy` é implementado como um script de shell que compila e executa diretamente o programa Haskell. Isso simplifica a utilização do `grepy`, já que você não precisa se preocupar com a compilação manual do código Haskell.
+    
+Para poder usar o programa, antes é necessário que seja compilado e colocado em algum dos diretórios de binário disponível no seu PATH. O script `setup.sh` é o responsável por fazer isso, ele garante que `/local/bin` esteja no seu PATH e coloca o executável lá.
+
+```bash
+$ chmod +x setup.sh clean.sh
+$ ./setup.sh
+```
+
+Caso queira desfazer e apagar o utilitário, rode o `clean.sh`
 
 ## Uso e Flags
-Para usar o `grepy`, basta executar o script `grepy` fornecendo o padrão e o arquivo como argumentos:
+Para rodar o programa, basta executar `grepy` na linha de comando fornecendo o padrão e o arquivo como argumentos:
 
-* ./grepy "padrão" arquivo.txt
+```bash
+grepy <padrão> arquivo.txt
+```
 
 ```bash
 O `grepy` suporta as seguintes flags para personalizar a busca:
@@ -24,38 +34,38 @@ O `grepy` suporta as seguintes flags para personalizar a busca:
 - `--help` ou `-h`: Mostra a mensagem de uso do programa
 ```
 
-## Exemplos de Uso das flags
+## Alguns exemplos
 
 ###  Exibir a Contagem dos Padrões Casados
 ```bash
-./grepy --count "padrão" arquivo.txt
-``` 
+grepy --count <padrão> arquivo.txt
+```
 
 ### Buscar Recursivamente pelo Padrão em um Diretório
 ```bash
-./grepy --recursive "padrão" diretório/
+grepy --recursive <padrão> diretório/
 ```
 
 ### Buscar Padrão Seguindo uma Palavra
 ```bash
-./grepy --wordregex "padrão" arquivo.txt
-``` 
+grepy --wordregex <padrão> arquivo.txt
+```
 
 ### Excluir um Arquivo da Busca Rescursiva
 ```bash
-./grepy --recursive --exclude "arquivo_excluído.txt" "padrão" diretório/
+grepy --recursive --exclude "arquivo_excluído.txt" <padrão> diretório/
 ```
 
 ### Mostrar a Mensagem de Uso do Programa
 ```bash
-./grepy --help 
+grepy --help
 ```
 
 ## Autores
 
-- Winicius Allan
-- Ronald Matias
-- Francisco Pereira
-- Julio Alcântara
-- Isaac Vicente
-
+- [Winicius Allan](https://github.com/winiciusallan)
+- [Ronaldd Matias](https://github.com/RonalddMatias)
+- [Francisco Pereira](https://github.com/Francisco-xiq)
+- [Julio Alcântara](https://github.com/alcantarajulio)
+- [Isaac Vicente](https://github.com/isaacvicente)
+```
