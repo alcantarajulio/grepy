@@ -1,36 +1,26 @@
-import Options.Applicative
-import Data.Semigroup ((<>))
-import Control.Monad (forM_)
-import System.IO
-import qualified Data.Text as T
-import qualified Data.Text.IO as TIO
+module Grepy
+  ( processLines,
+    main,
+  )
+where
 
-data GrepOptions = GrepOptions
-    { pattern :: String
-    , files :: [FilePath]
-    }
+import System.Environment (getArgs)
+import Text.Regex.TDFA
+import Data.List (intercalate)
 
-grepOptions :: Parser GrepOptions
-grepOptions = GrepOptions
-    <$> argument str
-        ( metavar "PATTERN"
-       <> help "Pattern to search for" )
-    <*> many (argument str
-        ( metavar "FILES..."
-       <> help "Files to search in" ))
+-- Function to process a line and filter lines matching the regex pattern
+processLines :: String -> String -> [String]
+processLines str pattern = filter (=~ pattern) (lines str)
 
-runGrep :: GrepOptions -> IO ()
-runGrep (GrepOptions pattern files) = do
-    forM_ files $ \file -> do
-        contents <- TIO.readFile file
-        let matchingLines = filter (T.isInfixOf (T.pack pattern)) (T.lines contents)
-        forM_ matchingLines TIO.putStrLn
-
+-- Main function that reads the file and prints matching lines
 main :: IO ()
-main = execParser opts >>= runGrep
-  where
-    opts = info (grepOptions <**> helper)
-      ( fullDesc
-     <> progDesc "A Haskell clone of grep"
-     <> header "grepy - a grep clone written in Haskell" )
+main = do
+  args <- getArgs
+  case args of
+    [filePath, pattern] -> do
+      contents <- readFile filePath
+      let finalMatches = processLines contents pattern
+      putStrLn $ "Lines matching regex '" ++ pattern ++ "' in file '" ++ filePath ++ "':"
+      mapM_ putStrLn finalMatches
+    _ -> putStrLn "Usage: grepy <file-path> <regex-pattern>"
 

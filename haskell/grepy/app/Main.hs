@@ -1,15 +1,16 @@
-module Main (main) where 
 
-import Lib
+module Main where
 
+import Grepy
+
+-- Main function that reads the file and prints matching lines
 main :: IO ()
-main = greet =<< execParser opts
-  where
-    opts = info (sample <**> helper)
-      ( fullDesc
-     <> progDesc "Print a greeting for TARGET"
-     <> header "hello - a test for optparse-applicative" )
-
-greet :: Sample -> IO ()
-greet (Sample h False n) = putStrLn $ "Hello, " ++ h ++ replicate n '!'
-greet _ = return ()
+main = do
+  putStrLn "Enter regex pattern:"
+  regex <- getLine
+  putStrLn "Enter file path:"
+  filePath <- getLine
+  contents <- readFile filePath
+  let finalMatches = processLines contents regex
+  putStrLn $ "Lines matching regex '" ++ regex ++ "' in file '" ++ filePath ++ "':"
+  mapM_ putStrLn finalMatches
