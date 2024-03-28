@@ -39,11 +39,14 @@ library
     , optparse-applicative
     , regex-tdfa
     , split
+    , text
   default-language: Haskell2010
 
 executable grepy-exe
   main-is: Main.hs
   other-modules:
+      CommandParser
+      Utils
       Paths_grepy
   autogen-modules:
       Paths_grepy
@@ -57,6 +60,7 @@ executable grepy-exe
     , optparse-applicative
     , regex-tdfa
     , split
+    , text
   default-language: Haskell2010
 
 test-suite grepy-test
@@ -76,4 +80,5 @@ test-suite grepy-test
     , optparse-applicative
     , regex-tdfa
     , split
+    , text
   default-language: Haskell2010
