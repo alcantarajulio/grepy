@@ -37,7 +37,6 @@ library
   build-depends:
       ansi-terminal
     , base >=4.7 && <5
-    , optparse-applicative
     , regex-tdfa
     , split
     , text
@@ -58,7 +57,6 @@ executable grepy-exe
       ansi-terminal
     , base >=4.7 && <5
     , grepy
-    , optparse-applicative
     , regex-tdfa
     , split
     , text
@@ -78,7 +76,6 @@ test-suite grepy-test
       ansi-terminal
     , base >=4.7 && <5
     , grepy
-    , optparse-applicative
     , regex-tdfa
     , split
     , text
