@@ -35,7 +35,7 @@ library
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
   build-depends:
       base >=4.7 && <5
-    , optparse-applicative
+    , regex-base
     , regex-tdfa
     , text
   default-language: Haskell2010
@@ -45,6 +45,7 @@ executable grepy-exe
   other-modules:
       CommandParser
       Utils
+      Count
       Paths_grepy
   autogen-modules:
       Paths_grepy
@@ -54,7 +55,7 @@ executable grepy-exe
   build-depends:
       base >=4.7 && <5
     , grepy
-    , optparse-applicative
+    , regex-base
     , regex-tdfa
     , text
   default-language: Haskell2010
@@ -72,7 +73,7 @@ test-suite grepy-test
   build-depends:
       base >=4.7 && <5
     , grepy
-    , optparse-applicative
+    , regex-base
     , regex-tdfa
     , text
   default-language: Haskell2010
