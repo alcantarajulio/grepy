@@ -27,6 +27,7 @@ library
   exposed-modules:
       Count
       Format
+      Grepy
       Lib
   other-modules:
       Paths_grepy
@@ -38,9 +39,11 @@ library
   build-depends:
       ansi-terminal
     , base >=4.7 && <5
+    , directory
     , regex-tdfa
     , split
     , text
+    , unix
   default-language: Haskell2010
 
 executable grepy-exe
@@ -57,10 +60,12 @@ executable grepy-exe
   build-depends:
       ansi-terminal
     , base >=4.7 && <5
+    , directory
     , grepy
     , regex-tdfa
     , split
     , text
+    , unix
   default-language: Haskell2010
 
 test-suite grepy-test
@@ -76,8 +81,10 @@ test-suite grepy-test
   build-depends:
       ansi-terminal
     , base >=4.7 && <5
+    , directory
     , grepy
     , regex-tdfa
     , split
     , text
+    , unix
   default-language: Haskell2010

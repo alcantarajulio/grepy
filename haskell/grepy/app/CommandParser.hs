@@ -4,15 +4,21 @@ module CommandParser (
 
 import Utils (usage)
 import Data.Maybe ( isNothing )
+import Grepy (grepy)
+import System.IO (readFile)
+import Count (countLines)
 
 -- Mock function to test dispatch
-hello :: Maybe FilePath -> IO ()
-hello path = if isNothing path then (print "Eh nothing") else (print "Nao eh nothing")
+-- hello :: Maybe FilePath -> IO ()
+-- hello path = if isNothing path then (print "Eh nothing") else (print "Nao eh nothing")
 
-dispatch :: String -> String -> Maybe FilePath -> IO ()
-dispatch "--help" _ _ = usage
-dispatch "-h" _ _ = usage
--- Cases like that must be treated to receive the content from stdin
-dispatch "--hello" _ Nothing = hello Nothing
-dispatch "--hello" _ (Just path) = hello (Just path)
+dispatch :: Maybe String -> String -> Maybe String -> [String]
+dispatch (Just "--help") _ _ = usage
+dispatch (Just "-h") _ _ = usage
+dispatch _ _ Nothing = usage
+-- No flag
+dispatch Nothing pattern (Just content) = grepy pattern content
+-- Count
+dispatch (Just "--count") pattern (Just content) = [show (countLines (grepy pattern content))]
+dispatch (Just "-c") pattern (Just content) = [show (countLines (grepy pattern content))]
 dispatch _ _ _ = usage

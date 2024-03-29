@@ -2,9 +2,10 @@ module Utils (
     usage
 ) where
 
-usage :: IO ()
-usage = do 
-    putStrLn "Usage: grepy [-c | --count] [-r | --recursive] \n\
+import Data.List.Split (splitOn)
+
+usage :: [String]
+usage = splitOn "\n" "Usage: grepy [-c | --count] [-r | --recursive] \n\
        \     [-w | --wordregex] [-e | --exclude] [-h | --help] <file>\n\ 
        \ \n\
 \ O grepy procura por casamento dos padrões nos arquivos ou string passadas como entrada para o programa.\n\

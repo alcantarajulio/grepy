@@ -25,6 +25,8 @@ dependencies:
 - ansi-terminal
 - split
 - text
+- directory
+- unix
 
 ghc-options:
 - -Wall
