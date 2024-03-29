@@ -24,6 +24,7 @@ dependencies:
 - regex-tdfa
 - ansi-terminal
 - split
+- text
 
 ghc-options:
 - -Wall

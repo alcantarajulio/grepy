@@ -1,18 +1,16 @@
-module Format (destacarPadrao) where
-    
+module Format (highlightPattern) where
 
-import System.Console.ANSI
 import Data.List
-import Lib
-
+import Data.List (intercalate, isInfixOf)
 import Data.List.Split (splitOn)
-import Data.List (isInfixOf, intercalate)
+import Lib
+import System.Console.ANSI
 
 -- Função para colorir uma palavra
-colorirPalavra :: String -> String
-colorirPalavra palavra = setSGRCode [SetColor Foreground Vivid Red] ++ palavra ++ setSGRCode [Reset]
+colorWord :: String -> String
+colorWord word = setSGRCode [SetColor Foreground Vivid Red] ++ word ++ setSGRCode [Reset]
 
--- Função para destacar o padrão na linha
-destacarPadrao :: String -> String -> String
-destacarPadrao pattern linha =
-    intercalate (colorirPalavra pattern) (splitOn pattern linha)
+-- Funpara destacar o padrão na linha
+highlightPattern :: String -> String -> String
+highlightPattern pattern line =
+  intercalate (colorWord pattern) (splitOn pattern line)
