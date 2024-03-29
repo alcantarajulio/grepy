@@ -1,5 +1,10 @@
 module Main (main) where
 
+import Lib
+import System.IO (readFile)
+import System.Environment (getArgs)
+import Utils (usage)
+import CommandParser (dispatch)
 import Text.Regex.TDFA ( (=~) )
 import Data.List (foldl')
 import Format (destacarPadrao)
@@ -23,10 +28,18 @@ processText text pattern =
 
 main :: IO ()
 main = do
-  let text = "oi eu gosto de bolo\nbolo de chocolate\nnão tem eustaquio bolo aqui\nisaac limpa catota\nisaac limpa bolo ta\naaaa\na\naaccccbbbb\nabcc"
-      pattern = "oi"
-      matches = processText text pattern
-  putStrLn "Padrões encontrados:"
-  -- mapM_ (\(line, matched) -> putStrLn $ "Linha: " ++ line ++ " Padrão: " ++ matched) matches
-  let linhasDestacadas = map (destacarPadrao pattern) matches
-  mapM_ putStrLn linhasDestacadas
+    args <- getArgs
+    case args of
+        [command, pattern, path] -> dispatch command pattern (Just path)
+        -- (NOTE: winiciusallan) This match must receive the file content from stdin
+        [command, pattern] -> dispatch command pattern Nothing
+        _ -> dispatch "help" "" Nothing
+
+-- main = do
+--   let text = "oi eu gosto de bolo\nbolo de chocolate\nnão tem eustaquio bolo aqui\nisaac limpa catota\nisaac limpa bolo ta\naaaa\na\naaccccbbbb\nabcc"
+--       pattern = "oi"
+--       matches = processText text pattern
+--   putStrLn "Padrões encontrados:"
+--   -- mapM_ (\(line, matched) -> putStrLn $ "Linha: " ++ line ++ " Padrão: " ++ matched) matches
+--   let linhasDestacadas = map (destacarPadrao pattern) matches
+--   mapM_ putStrLn linhasDestacadas
