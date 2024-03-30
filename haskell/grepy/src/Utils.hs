@@ -27,7 +27,7 @@ stdinVerify = not <$> queryTerminal 0
 
 isFlag :: String -> Bool
 isFlag flag = flag `elem` [ "--count", "-c", "--help", "-h",
-      "--wordregex",  "-w", "--recursive",  "-r",
+      "--word-regexp",  "-w", "--recursive",  "-r",
       "--recursive-exlcude",  "-e"]
 
 fileNotExits :: FilePath -> IO Bool
