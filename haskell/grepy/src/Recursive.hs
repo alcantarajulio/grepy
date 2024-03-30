@@ -21,6 +21,15 @@ getAllFiles dir = do
       contents
   return (concat paths)
 
+getMatches :: String -> IO [FilePath] -> [String]
+getMatches pattern (x : xs) = do
+  content <- readFile x
+  let linesMatched = grepy pattern content
+  addPrefix (x ++ ": ") linesMatched : getMatches pattern xs
+
+addPrefix :: String -> [String] -> [String]
+addPrefix prefix = map (\s -> prefix ++ s)
+
 main :: IO ()
 main = do
   putStrLn "Enter directory path:"
