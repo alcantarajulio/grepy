@@ -25,12 +25,18 @@ source-repository head
 
 library
   exposed-modules:
+      CommandParser
       Count
       Format
       Grepy
       GrepyRecursive
       Lib
+<<<<<<< HEAD
       Recursive
+=======
+      Utils
+      WordRegexp
+>>>>>>> feat/grepy
   other-modules:
       Paths_grepy
   autogen-modules:
@@ -52,9 +58,12 @@ library
 executable grepy-exe
   main-is: Main.hs
   other-modules:
+<<<<<<< HEAD
       CommandParser
       MainRecursive
       Utils
+=======
+>>>>>>> feat/grepy
       Paths_grepy
   autogen-modules:
       Paths_grepy
