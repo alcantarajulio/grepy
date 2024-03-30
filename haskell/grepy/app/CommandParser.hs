@@ -1,12 +1,13 @@
-module CommandParser (
-    dispatch
-) where
+module CommandParser
+  ( dispatch,
+  )
+where
 
-import Utils (usage)
-import Data.Maybe ( isNothing )
+import Count (countLines)
+import Data.Maybe (isNothing)
 import Grepy (grepy)
 import System.IO (readFile)
-import Count (countLines)
+import Utils (usage)
 
 -- Mock function to test dispatch
 -- hello :: Maybe FilePath -> IO ()

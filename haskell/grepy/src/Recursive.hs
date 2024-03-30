@@ -3,6 +3,7 @@ module Recursive
   )
 where
 
+import Grepy (grepy)
 import System.Directory (doesDirectoryExist, listDirectory)
 import System.FilePath ((</>))
 

@@ -28,6 +28,7 @@ library
       Count
       Format
       Grepy
+      GrepyRecursive
       Lib
       Recursive
   other-modules:
@@ -52,6 +53,7 @@ executable grepy-exe
   main-is: Main.hs
   other-modules:
       CommandParser
+      MainRecursive
       Utils
       Paths_grepy
   autogen-modules:
