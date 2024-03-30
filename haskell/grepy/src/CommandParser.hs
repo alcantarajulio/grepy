@@ -1,5 +1,6 @@
 module CommandParser (
-    dispatch
+    dispatch,
+    dispatch2
 ) where
 
 import Utils (usage)
@@ -36,4 +37,8 @@ dispatch (Just "-w") pattern (Just content) =
         Nothing -> ["Failed to generate word regex"]  -- or any other appropriate handling
 
 -- Se nenhuma das flags acima corresponder, exibe a mensagem de uso
+-- Recursive
+-- No match
+dispatch2 :: Maybe String -> String -> String -> Maybe String-> [String]
+dispatch2 (Just "--recursive") pattern file_path (Just path) = usage
 dispatch _ _ _ = usage
