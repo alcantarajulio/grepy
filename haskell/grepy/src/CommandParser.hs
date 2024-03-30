@@ -25,7 +25,7 @@ dispatch Nothing pattern (Just content) = grepy pattern content
 dispatch (Just "--count") pattern (Just content) = [show (countLines (grepy pattern content))]
 dispatch (Just "-c") pattern (Just content) = [show (countLines (grepy pattern content))]
 
-WordRegexp
+-- WordRegexp
 dispatch (Just "--word-regexp") pattern (Just content) =
     case wordRegExp pattern of
         Just regex -> grepy regex content
@@ -34,6 +34,6 @@ dispatch (Just "-w") pattern (Just content) =
     case wordRegExp pattern of
         Just regex -> grepy regex content
         Nothing -> ["Failed to generate word regex"]  -- or any other appropriate handling
-        
+
 -- Se nenhuma das flags acima corresponder, exibe a mensagem de uso
 dispatch _ _ _ = usage
