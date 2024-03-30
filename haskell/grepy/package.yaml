@@ -26,6 +26,7 @@ dependencies:
 - split
 - text
 - directory
+- filepath
 - unix
 
 ghc-options:

@@ -35,6 +35,6 @@ dispatch _ _ _ = usage
 -- Recursive
 -- No match
 dispatch2 :: Maybe String -> String -> String -> Maybe String-> [String]
-dispatch2 (Just "--recursive") pattern file_path (Just path) = usage
-dispatch2 (Just "-r") pattern file_path (Just path) = usage
+dispatch (Just "--recursive") pattern (Just content) = [show (recursiveGrepy pattern content)]
+dispatch (Just "-r") pattern (Just content) = [show (countLines (grepy pattern content))]
 

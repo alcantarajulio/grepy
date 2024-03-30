@@ -29,9 +29,14 @@ library
       Count
       Format
       Grepy
+      GrepyRecursive
       Lib
+<<<<<<< HEAD
+      Recursive
+=======
       Utils
       WordRegexp
+>>>>>>> feat/grepy
   other-modules:
       Paths_grepy
   autogen-modules:
@@ -43,6 +48,7 @@ library
       ansi-terminal
     , base >=4.7 && <5
     , directory
+    , filepath
     , regex-tdfa
     , split
     , text
@@ -52,6 +58,12 @@ library
 executable grepy-exe
   main-is: Main.hs
   other-modules:
+<<<<<<< HEAD
+      CommandParser
+      MainRecursive
+      Utils
+=======
+>>>>>>> feat/grepy
       Paths_grepy
   autogen-modules:
       Paths_grepy
@@ -62,6 +74,7 @@ executable grepy-exe
       ansi-terminal
     , base >=4.7 && <5
     , directory
+    , filepath
     , grepy
     , regex-tdfa
     , split
@@ -83,6 +96,7 @@ test-suite grepy-test
       ansi-terminal
     , base >=4.7 && <5
     , directory
+    , filepath
     , grepy
     , regex-tdfa
     , split
