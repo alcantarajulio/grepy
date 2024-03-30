@@ -30,8 +30,6 @@ library
       Format
       Grepy
       GrepyRecursive
-      Lib
-      Recursive
       Utils
       WordRegexp
   other-modules:
