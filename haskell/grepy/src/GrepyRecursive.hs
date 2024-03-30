@@ -3,16 +3,10 @@ module GrepyRecursive (recursiveGrepy) where
 import Control.Exception (IOException, catch, try)
 import Data.List (foldl')
 import Format (highlightPattern)
+import Grepy (findPattern)
 import System.Directory (doesFileExist, listDirectory)
 import System.FilePath ((</>))
 import Text.Regex.TDFA ((=~))
-
--- Function to find the pattern in a line
-findPattern :: String -> String -> Maybe String
-findPattern pattern line =
-  case line =~ pattern :: (String, String, String) of
-    (_, "", _) -> Nothing
-    (before, matched, after) -> Just (highlightPattern matched (before ++ matched ++ after))
 
 -- Function to process the text line by line and find patterns
 recursiveGrepy :: String -> FilePath -> IO [String]

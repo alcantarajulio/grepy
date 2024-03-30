@@ -3,7 +3,6 @@ module Format (highlightPattern) where
 import Data.List
 import Data.List (intercalate, isInfixOf)
 import Data.List.Split (splitOn)
-import Lib
 import System.Console.ANSI
 
 -- Função para colorir uma palavra

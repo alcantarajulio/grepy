@@ -1,5 +1,6 @@
 module Grepy
   ( grepy,
+    findPattern,
   )
 where
 
