@@ -6,6 +6,7 @@ where
 import Count (countLines)
 import Data.Maybe (isNothing)
 import Grepy (grepy)
+import GrepyRecursive (recursiveGrepy)
 import System.IO (readFile)
 import Utils (usage)
 
@@ -22,4 +23,6 @@ dispatch Nothing pattern (Just content) = grepy pattern content
 -- Count
 dispatch (Just "--count") pattern (Just content) = [show (countLines (grepy pattern content))]
 dispatch (Just "-c") pattern (Just content) = [show (countLines (grepy pattern content))]
+dispatch (Just "--recursive") pattern (Just content) = [show (recursiveGrepy pattern content)]
+dispatch (Just "-r") pattern (Just content) = [show (countLines (grepy pattern content))]
 dispatch _ _ _ = usage
