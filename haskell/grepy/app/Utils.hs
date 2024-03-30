@@ -3,9 +3,12 @@ module Utils
   )
 where
 
-usage :: IO ()
-usage = do
-  putStrLn
+import Data.List.Split (splitOn)
+
+usage :: [String]
+usage =
+  splitOn
+    "\n"
     "Usage: grepy [-c | --count] [-r | --recursive] \n\
     \     [-w | --word-regexp] [-e | --exclude] [-h | --help] <file>\n\
     \ \n\

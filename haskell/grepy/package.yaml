@@ -27,6 +27,7 @@ dependencies:
 - text
 - directory
 - filepath
+- unix
 
 ghc-options:
 - -Wall
