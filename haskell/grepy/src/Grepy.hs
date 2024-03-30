@@ -1,6 +1,8 @@
-module Grepy (
-    grepy
-) where
+module Grepy
+  ( grepy,
+    findPattern,
+  )
+where
 
 import Data.List (foldl')
 import Format (highlightPattern)
