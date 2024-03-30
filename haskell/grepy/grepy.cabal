@@ -25,10 +25,13 @@ source-repository head
 
 library
   exposed-modules:
+      CommandParser
       Count
       Format
       Grepy
       Lib
+      Utils
+      WordRegexp
   other-modules:
       Paths_grepy
   autogen-modules:
@@ -49,8 +52,6 @@ library
 executable grepy-exe
   main-is: Main.hs
   other-modules:
-      CommandParser
-      Utils
       Paths_grepy
   autogen-modules:
       Paths_grepy
