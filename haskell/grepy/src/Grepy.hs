@@ -22,5 +22,3 @@ grepy pattern text =
         Nothing -> acc
         Just match -> match : acc
    in foldl' processLine [] (reverse linesList) -- Itera sobre as linhas e acumula os resultados
-
-

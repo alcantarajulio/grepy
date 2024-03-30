@@ -4,15 +4,10 @@ module CommandParser (
 ) where
 
 import Utils (usage)
-import Data.Maybe ( isNothing )
 import Grepy (grepy)
 import System.IO (readFile)
 import Count (countLines)
 import WordRegexp (wordRegExp)
-
--- Mock function to test dispatch
--- hello :: Maybe FilePath -> IO ()
--- hello path = if isNothing path then (print "Eh nothing") else (print "Nao eh nothing")
 
 dispatch :: Maybe String -> String -> Maybe String -> [String]
 dispatch (Just "--help") _ _ = usage
@@ -36,9 +31,10 @@ dispatch (Just "-w") pattern (Just content) =
         Just regex -> grepy regex content
         Nothing -> ["Failed to generate word regex"]  -- or any other appropriate handling
 dispatch _ _ _ = usage
--- Se nenhuma das flags acima corresponder, exibe a mensagem de uso
+
 -- Recursive
 -- No match
 dispatch2 :: Maybe String -> String -> String -> Maybe String-> [String]
 dispatch2 (Just "--recursive") pattern file_path (Just path) = usage
+dispatch2 (Just "-r") pattern file_path (Just path) = usage
 

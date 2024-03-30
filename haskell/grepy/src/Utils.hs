@@ -8,7 +8,6 @@ import Data.String (String)
 import System.Directory (doesFileExist)
 
 
-
 usage :: [String]
 usage = splitOn "\n" "Usage: grepy [-c | --count] [-r | --recursive] \n\
        \     [-w | --word-regexp] [-e | --exclude] [-h | --help] <file>\n\ 
@@ -22,6 +21,7 @@ usage = splitOn "\n" "Usage: grepy [-c | --count] [-r | --recursive] \n\
 \ -e, --exclude      Exclui um arquivo da busca recursiva. Deve ser usada juntamente com `-r` \n\
 \ -h, --help         Mostra a mensagem de uso do programa."
 
+-- Verify if stdin is coming from a pipe operator (|)
 stdinVerify :: IO Bool
 stdinVerify = not <$> queryTerminal 0
 
