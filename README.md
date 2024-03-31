@@ -29,8 +29,8 @@ O `grepy` suporta as seguintes flags para personalizar a busca:
 
 - `--count` ou `-c`: Exibe a contagem dos padrões casados.
 - `--recursive` ou `-r`: Procura pelo padrão nos arquivos do diretório passado como parâmetro, recursivamente.
+- `--recursive-exclude` ou `-e`: Tem funcionamento similar a `--recursive`, porem exclui da busca o arquivo passado.
 - `--wordregex` ou `-w`: O padrão é buscado seguindo a palavra passada como parâmetro.
-- `--exclude` ou `-e`: Exclui um arquivo da busca recursiva. Deve ser usada em conjunto com `-r`.
 - `--help` ou `-h`: Mostra a mensagem de uso do programa
 ```
 
