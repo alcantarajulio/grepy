@@ -4,7 +4,7 @@ import CommandParser (dispatch, dispatchRecursive, dispatchRecursiveExcludes)
 import System.Environment (getArgs)
 import System.Directory (doesFileExist)
 import System.IO (readFile)
-import Utils (usage, stdinVerify, isFlag, fileNotExits)
+import Utils (usage, stdinVerify, isFlag, fileNotExits, verifyRecursivesCases)
 
 
 uso :: [String]
@@ -20,7 +20,7 @@ main = do
         verifyStdin <- stdinVerify
         verifyPath <- fileNotExits (last args)
 
-        if not ((head args) == "--recursive" || (head args) == "-r" || (head args) == "--recursive-exclude" || (head args) == "-e")
+        if not (verifyRecursivesCases (head args))
             then do
                 if not (verifyStdin /= verifyPath) then mapM_ putStrLn uso
                 else

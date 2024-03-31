@@ -1,11 +1,12 @@
 module Utils (
-    usage, stdinVerify, isFlag, fileNotExits
+    usage, stdinVerify, isFlag, fileNotExits, verifyRecursivesCases
 ) where
 
 import Data.List.Split (splitOn)
 import System.Posix.Terminal (queryTerminal)
 import Data.String (String)
 import System.Directory (doesFileExist)
+import Data.Bool (Bool)
 
 
 usage :: [String]
@@ -28,8 +29,11 @@ stdinVerify = not <$> queryTerminal 0
 isFlag :: String -> Bool
 isFlag flag = flag `elem` [ "--count", "-c", "--help", "-h",
       "--word-regexp",  "-w", "--recursive",  "-r",
-      "--recursive-exlcude",  "-e"]
+      "--recursive-exclude",  "-e"]
 
 fileNotExits :: FilePath -> IO Bool
 fileNotExits path = doesFileExist path
+
+verifyRecursivesCases :: String -> Bool
+verifyRecursivesCases arg = arg `elem` ["--recursive",  "-r", "--recursive-exclude",  "-e"]
 
