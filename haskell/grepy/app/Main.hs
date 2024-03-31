@@ -20,13 +20,12 @@ main = do
         verifyStdin <- stdinVerify
         verifyPath <- fileNotExits (last args)
 
-        if not ((head args) == "--recursive")
+        if not ((head args) == "--recursive" || (head args) == "-r")
             then do
                 if not (verifyStdin /= verifyPath) then mapM_ putStrLn uso
                 else
                     case args of
                         [arg1] -> do
-                            print "1argumento"
                             if verifyStdin then do
                                 content <- getContents
                                 mapM_ putStrLn (dispatch Nothing arg1 (Just content))
@@ -34,7 +33,6 @@ main = do
                                 mapM_ putStrLn uso
 
                         [arg1, arg2] -> do
-                            print "2argumentos"
                             if verifyStdin then do
                                 if isFlag (head args) then do
                                     content <- getContents
@@ -49,7 +47,6 @@ main = do
                                     mapM_ putStrLn uso
 
                         [arg1, arg2, arg3] -> do
-                                print "3 argumentos"
                                 if verifyPath then do
                                     file <- readFile arg3
                                     mapM_ putStrLn (dispatch (Just arg1) arg2 (Just file))
