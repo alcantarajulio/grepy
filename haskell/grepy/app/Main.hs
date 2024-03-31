@@ -1,6 +1,6 @@
 module Main (main) where
 
-import CommandParser (dispatch, dispatchRecursive)
+import CommandParser (dispatch, dispatchRecursive, dispatchRecursiveExcludes)
 import System.Environment (getArgs)
 import System.Directory (doesFileExist)
 import System.IO (readFile)
@@ -20,7 +20,7 @@ main = do
         verifyStdin <- stdinVerify
         verifyPath <- fileNotExits (last args)
 
-        if not ((head args) == "--recursive" || (head args) == "-r")
+        if not ((head args) == "--recursive" || (head args) == "-r" || (head args) == "--recursive-exclude" || (head args) == "-e")
             then do
                 if not (verifyStdin /= verifyPath) then mapM_ putStrLn uso
                 else
@@ -56,13 +56,14 @@ main = do
                         _ -> mapM_ putStrLn uso
             else do
                 case args of
+                    
                     [arg1, arg2, arg3] -> do
                         out <- (dispatchRecursive (Just arg1) arg2 (Just arg3))
                         mapM_ putStrLn out 
 
-                    -- [arg1, arg2, arg3, arg4] -> do
-                    --     out <- (dispatchRecursiveExclude (Just arg1) arg2 (Just arg3) (Just arg4))
-                    --     mapM_ putStrLn out
+                    [arg1, arg2, arg3, arg4] -> do
+                        out <- (dispatchRecursiveExcludes (Just arg1) arg2 (Just arg4) (Just [arg3]))
+                        mapM_ putStrLn out
                     
                     _ -> mapM_ putStrLn uso
 

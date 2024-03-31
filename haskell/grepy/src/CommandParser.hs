@@ -1,6 +1,7 @@
 module CommandParser (
     dispatch,
-    dispatchRecursive
+    dispatchRecursive,
+    dispatchRecursiveExcludes
 ) where
 
 import Utils (usage)
@@ -36,12 +37,15 @@ dispatch _ _ _ = usage
 
 -- Recursive
 dispatchRecursive :: Maybe String -> String -> Maybe FilePath -> IO [String]
-dispatchRecursive (Just "--recursive") pattern (Just path) = recursiveGrepy pattern path
-dispatchRecursive (Just "-r") pattern (Just path) = recursiveGrepy pattern path
+dispatchRecursive (Just "--recursive") pattern (Just dirPath) = recursiveGrepy pattern dirPath []
+dispatchRecursive (Just "-r") pattern (Just dirPath) = recursiveGrepy pattern dirPath []
+
 -- Recursive-Exclude
--- dispatchRecursiveExclude :: Maybe String -> String -> Maybe FilePath -> Maybe FilePath -> IO [String]
--- dispatchRecursiveExclude (Just "--recursive-exclude") pattern (Just file_path) (Just dir_path) = recursiveGrepy pattern file_path dir_path
--- dispatchRecursiveExclude (Just "-e") pattern (Just file_path) (Just dir_path) = recursiveGrepy pattern file_path dir_path
+dispatchRecursiveExcludes :: Maybe String -> String -> Maybe FilePath -> Maybe [FilePath] -> IO [String]
+dispatchRecursiveExcludes (Just "--recursive-exclude") pattern (Just dirPath) (Just excludes) =
+  recursiveGrepy pattern dirPath excludes
+dispatchRecursiveExcludes (Just "-e") pattern (Just dirPath) (Just excludes) =
+  recursiveGrepy pattern dirPath excludes
 
 
 
