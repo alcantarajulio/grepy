@@ -94,7 +94,7 @@ getAllFiles dir excludes = do
       isFile <- doesFileExist fullPath
       isDir <- doesDirectoryExist fullPath
       if isFile && not (any (`elem` excludes) [fullPath]) then
-        return [fullPathe]
+        return [fullPath]
       else if isDir then
         getAllFiles fullPath excludes
       else
