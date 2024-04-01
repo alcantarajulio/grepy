@@ -6,7 +6,6 @@ module CommandParser (
 
 import Utils (usage)
 import Grepy (grepy)
-import System.IO (readFile)
 import Count (countLines)
 import WordRegexp (wordRegExp)
 import GrepyRecursive (recursiveGrepy)
