@@ -49,30 +49,36 @@ O `grepy` suporta as seguintes flags para personalizar a busca:
 
 ## Alguns exemplos
 
-###  Exibir a Contagem dos Padrões Casados
+###  Exibir a contagem dos padrões casados
 ```bash
 grepy --count <padrão> arquivo.txt
 ```
 
-### Buscar Recursivamente pelo Padrão em um Diretório
+### Buscar recursivamente pelo padrão em um diretório
 ```bash
 grepy --recursive <padrão> diretório/
 ```
 
-### Buscar Padrão Seguindo uma Palavra
+### Buscar padrão seguindo uma palavra
 ```bash
 grepy --word-regexp <padrão> arquivo.txt
 ```
 
-### Excluir um Arquivo da Busca Rescursiva
+### Excluir um arquivo da busca rescursiva
 ```bash
-grepy --recursive "arquivo_excluído.txt" <padrão> diretório/
+grepy --recursive-exclude "arquivo_excluído.txt" <padrão> diretório/
 ```
 
-### Mostrar a Mensagem de Uso do Programa
+### Mostrar a mensagem de uso do programa
 ```bash
 grepy --help
 ```
+
+## Plataforma
+
+O `grepy` foi desenvolvido e testado em sistemas Linux e macOS. O script de setup deve funcionar para esses casos.
+Para Windows, o script mencionado não funciona, sendo necessário o usuário compilar o programa e executar o binário fornecido.
+(Em Windows, recomendamos um terminal que ofereça suporte a _true color_).
 
 ## Autores
 
