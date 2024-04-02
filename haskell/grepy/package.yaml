@@ -22,6 +22,12 @@ description:         Please see the README on GitHub at <https://github.com/gith
 dependencies:
 - base >= 4.7 && < 5
 - regex-tdfa
+- ansi-terminal
+- split
+- text
+- directory
+- filepath
+- unix
 
 ghc-options:
 - -Wall
