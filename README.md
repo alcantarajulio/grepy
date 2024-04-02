@@ -1,6 +1,8 @@
 <h1 align="center">Grepy</h1>
 
-O `grepy` é uma implementação simplificada do comando `grep`, do Linux, em Haskell. Ele busca por padrões especificados pelo usuário em um dado arquivo ou texto.
+O `grepy` é uma implementação simplificada do comando `grep`, do Linux, em
+Haskell. Ele busca por padrões especificados pelo usuário em um dado arquivo ou
+texto.
 
 ## Requisitos
   * [Haskell Stack](https://docs.haskellstack.org/en/stable/install_and_upgrade/)
@@ -8,11 +10,22 @@ O `grepy` é uma implementação simplificada do comando `grep`, do Linux, em Ha
 
 ## Compilação e Execução
     
-Para poder usar o programa, antes é necessário que seja compilado e colocado em algum dos diretórios de binário disponível no seu PATH. O script `setup.sh` é o responsável por fazer isso, ele garante que `/local/bin` esteja no seu PATH e coloca o executável lá.
+Para poder usar o programa, antes é necessário que seja compilado e colocado em
+algum dos diretórios de binário disponível no seu PATH. O script `setup.sh` é o
+responsável por fazer isso, ele verifica se `/local/bin` está no seu PATH e
+coloca o executável lá.
 
 ```bash
 $ chmod +x setup.sh clean.sh
 $ ./setup.sh
+```
+
+Caso o diretório não esteja no seu PATH, você deve adicionar a linha
+`PATH=~/.local/bin:$PATH` no seu `.profile` ou `.bashrc` (ou equivalente).
+Depois é necessário carregar o arquivo de configuração com:
+
+```bash
+source ~/.bashrc
 ```
 
 Caso queira desfazer e apagar o utilitário, rode o `clean.sh`
@@ -29,8 +42,8 @@ O `grepy` suporta as seguintes flags para personalizar a busca:
 
 - `--count` ou `-c`: Exibe a contagem dos padrões casados.
 - `--recursive` ou `-r`: Procura pelo padrão nos arquivos do diretório passado como parâmetro, recursivamente.
-- `--recursive-exclude` ou `-e`: Tem funcionamento similar a `--recursive`, porem exclui da busca o arquivo passado.
-- `--wordregex` ou `-w`: O padrão é buscado seguindo a palavra passada como parâmetro.
+- `--word-regexp` ou `-w`: O padrão é buscado seguindo a palavra passada como parâmetro.
+- `--recursive-exclude` ou `-e`: Exclui um arquivo da busca recursiva.
 - `--help` ou `-h`: Mostra a mensagem de uso do programa
 ```
 
@@ -48,12 +61,12 @@ grepy --recursive <padrão> diretório/
 
 ### Buscar Padrão Seguindo uma Palavra
 ```bash
-grepy --wordregex <padrão> arquivo.txt
+grepy --word-regexp <padrão> arquivo.txt
 ```
 
 ### Excluir um Arquivo da Busca Rescursiva
 ```bash
-grepy --recursive --exclude "arquivo_excluído.txt" <padrão> diretório/
+grepy --recursive "arquivo_excluído.txt" <padrão> diretório/
 ```
 
 ### Mostrar a Mensagem de Uso do Programa
@@ -68,4 +81,3 @@ grepy --help
 - [Francisco Pereira](https://github.com/Francisco-xiq)
 - [Julio Alcântara](https://github.com/alcantarajulio)
 - [Isaac Vicente](https://github.com/isaacvicente)
-```
