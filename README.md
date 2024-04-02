@@ -66,7 +66,7 @@ grepy --word-regexp <padrão> arquivo.txt
 
 ### Excluir um arquivo da busca rescursiva
 ```bash
-grepy --recursive "arquivo_excluído.txt" <padrão> diretório/
+grepy --recursive-exclude "arquivo_excluído.txt" <padrão> diretório/
 ```
 
 ### Mostrar a mensagem de uso do programa
