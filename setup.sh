@@ -9,6 +9,6 @@ if [[ ! $(echo $PATH | grep "/.local/bin") ]]; then
 fi
 
 cd $WORK_DIR
-stack build --copy-bins
+stack build --copy-bins > /dev/null
 mv ~/.local/bin/grepy-exe ~/.local/bin/grepy
 chmod +x ~/.local/bin/grepy
