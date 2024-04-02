@@ -74,6 +74,12 @@ grepy --recursive "arquivo_excluído.txt" <padrão> diretório/
 grepy --help
 ```
 
+## Plataforma
+
+O `grepy` foi desenvolvido e testado em sistemas Linux e macOS. O script de setup deve funcionar para esses casos.
+Para Windows, o script mencionado não funciona, sendo necessário o usuário compilar o programa e executar o binário fornecido.
+(Em Windows, recomendamos um terminal que ofereça suporte a _true color_).
+
 ## Autores
 
 - [Winicius Allan](https://github.com/winiciusallan)
