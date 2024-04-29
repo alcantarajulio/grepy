@@ -1,49 +1,32 @@
-% Esse é formatar que nao retorna nada se o padrao nao for encontrado
+:- module(format, [pinta_linha_inteira/3, pinta_ocorrencias/3]).
 
-:- dynamic delimitador/1.
+:- use_module(library(pcre)).
+
+:- dynamic delimitador/1, fim_delimitador/1.
 delimitador('\e[31m').  % Código ANSI para texto vermelho
 fim_delimitador('\e[0m').  % Código ANSI para resetar a formatação
 
-% Função para contar as ocorrências do padrão no texto
-conta_ocorrencias(Text, Pattern, Count) :-
-    atom_concat(_, Rest, Text),
-    atom_concat(Pattern, Suffix, Rest),
-    !,
-    conta_ocorrencias(Suffix, Pattern, SubCount),
-    Count is 1 + SubCount.
-conta_ocorrencias(_, _, 0).
-
-% Função para pintar as ocorrências do padrão no texto
-pinta_padrao(Text, Pattern, PaintedText) :-
+pinta_linha_inteira(Text, Pattern, PaintedText) :-
     delimitador(Delim),
     fim_delimitador(EndDelim),
-    atom_concat(Prefix, Rest, Text),
-    atom_concat(Pattern, Suffix, Rest),
-    !,
-    pinta_padrao(Suffix, Pattern, PaintedRest),
-    atom_concat(Prefix, Delim, Start),
-    atom_concat(Start, Pattern, Middle),
-    atom_concat(Middle, EndDelim, HighlightedPattern),
-    atom_concat(HighlightedPattern, PaintedRest, PaintedText).
-pinta_padrao(Text, _, Text).
-
-% Função principal para pintar e retornar a linha ou string vazia se padrão não encontrado
-linha_pintada(Text, Pattern, Result) :-
-    conta_ocorrencias(Text, Pattern, Count),
-    (
-        Count > 0
-    ->  pinta_padrao(Text, Pattern, PaintedText),
-        Result = PaintedText
-    ;   Result = ''
+    (   re_match(Pattern, Text) 
+    ->  atom_concat(Delim, Text, Start),
+        atom_concat(Start, EndDelim, PaintedText)
+    ;   PaintedText = Text
     ).
 
-% Teste
-:- initialization(main).
+pinta_ocorrencias(Text, Pattern, PaintedText) :-
+    delimitador(Delim),
+    fim_delimitador(EndDelim),
+    re_split(Pattern, Text, Parts, [include_delimiter(true)]),
+    pinta_partes(Parts, Pattern, Delim, EndDelim, PaintedText).
 
-main :-
-    Text = 'flamengo e brasileirao\nflamengo é campeao\n todo mundo viu o flamengo de 2019',
-    Pattern = 'a',
-    linha_pintada(Text, Pattern, Resultado),
-    writeln(Resultado),
-    halt.
-
+pinta_partes([], _, _, _, "").
+pinta_partes([Part|Rest], Pattern, Delim, EndDelim, PaintedText) :-
+    (   re_match(Pattern, Part) 
+    ->  atom_concat(Delim, Part, PartStart),
+        atom_concat(PartStart, EndDelim, PaintedPart)
+    ;   PaintedPart = Part
+    ),
+    pinta_partes(Rest, Pattern, Delim, EndDelim, PaintedRest),
+    atom_concat(PaintedPart, PaintedRest, PaintedText).
