@@ -6,6 +6,7 @@
 delimitador('\e[31m').  % Código ANSI para texto vermelho
 fim_delimitador('\e[0m').  % Código ANSI para resetar a formatação
 
+% pinta o pattern
 pinta_linha_inteira(Text, Pattern, PaintedText) :-
     delimitador(Delim),
     fim_delimitador(EndDelim),
@@ -15,6 +16,7 @@ pinta_linha_inteira(Text, Pattern, PaintedText) :-
     ;   PaintedText = Text
     ).
 
+% divide o texto em partes e pinta as partes que correspondem ao pattern
 pinta_ocorrencias(Text, Pattern, PaintedText) :-
     delimitador(Delim),
     fim_delimitador(EndDelim),
