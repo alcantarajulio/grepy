@@ -1,6 +1,6 @@
 :- use_module(dispatch).
 :- use_module(usage).
-% :- use_module().
+:- use_module(utils).
 % :- use_module().
 
 % parse_args :-
@@ -19,30 +19,43 @@
 %     writeln('Mensagem de erro aqui'),
 %     writeln(Other).
 
+% grepy
 handle_args([], Result) :-
     usage.
-
+% grepy -help
+% grepy -h
 handle_args([Arg1], Result) :-
-    writeln('UM ARGUMENTO').
+    dispatch(Arg1, Result).
 
+% grepy <pattern> file_path
+% grepy <pattern> stdin
 handle_args([Arg1, Arg2], Result) :-
-    % In this predicate, Arg1 could be a file or the string to be matched.
-    dispatch(Arg1, Arg2, Result).
-    writeln(Result).
+    writeln("oi").
+    %(file_exists(Arg2) -> (% ler o arquivo e jogar pro dispatch); dispatch(Arg1, Arg2, Result)).
 
+% grepy --count <pattern> file_path
+% grepy --count <pattern> stdin
+% grepy -c <pattern> file_path
+% grepy -c <pattern> stdin
+% grepy -word-regexp <pattern> file_path
+% grepy -word-regexp <pattern> stdin
+% grepy -w <pattern> file_path
+% grepy -w <pattern> stdin
+% grepy --recursive <pattern> dir_path
+% grepy -r <pattern> dir_path
 handle_args([Arg1, Arg2, Arg3], Result) :-
-    writeln('UM ARGUMENTO').
-    writeln(Result).
+    (is_recursive(Arg1) -> dispatchRecursive(Arg1, Arg2, Arg3, Result); dispatch(Arg1, Arg2, Arg3, Result)).
 
+% grepy --recursive-exclude <pattern> file_path dir_path
+% grepy -e <pattern> file_path dir_path
 handle_args([Arg1, Arg2, Arg3, Arg4], Result) :-
-    writeln('QUATRO ARGUMENTO').
-    writeln(Result).
-
-file_exists(File) :- exists_file(File).
+% falta fazer verificações
+    dispatchRecurssiveExclude(Arg1,Arg2,Arg3,Arg4,Result).
 
 main :-
     current_prolog_flag(argv, Argv),
     handle_args(Argv, Result),
+    writeln(Result),
     halt.
 
 :- initialization(main).
