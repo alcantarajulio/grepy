@@ -6,8 +6,8 @@
 :- use_module(wordRegex).
 
 % Usages
-dispatch('--help', Result) :- usage.
-dispatch('-h', Result) :- usage.
+dispatch('--help', Result) :- usage(Result).
+dispatch('-h', Result) :- usage(Result).
 
 % Grepy with no flags.
 dispatch(Pattern, Content, Result) :- grepy(Pattern, Content, Result).
@@ -16,7 +16,7 @@ dispatch(Pattern, Content, Result) :- grepy(Pattern, Content, Result).
 dispatch('--count', Pattern, Content, Result) :- 
     grepy(Pattern, Content, ParcialResult),
     contar_linhas(ParcialResult, Result). 
-dispatch('-c', Pattern, Content,Result ) :-
+dispatch('-c', Pattern, Content, Result ) :-
     grepy(Pattern, Content, ParcialResult),
     contar_linhas(ParcialResult, Result). 
 
@@ -39,6 +39,4 @@ dispatchRecursiveExclude('--recursive-exclude', Pattern, FilePath, Path ,Result)
     recurssive(Pattern, FilePath, Path, Result).
 dispatchRecursiveExclude('-e', Pattern, FilePath, Path ,Result) :-
     recurssive(Pattern, FilePath, Path, Result).
-
-% Nothing
-% dispatch(_, _, _) :- usage, write('esse caso').
+ 
