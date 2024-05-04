@@ -1,4 +1,8 @@
+:- module(grepy, [grepy/3]).
+
 :- use_module(format).
+:- use_module(wordRegex).
+:- use_module(count).
 
 % Finds and paints lines with the pattern, returning a list of painted lines
 find_lines_with_paint(Pattern, Text, PaintedLines) :-
@@ -21,5 +25,3 @@ choose_paint(Line, Pattern, Painted) :-
     ->  paint_whole_line(Line, Pattern, Painted)
     ;   paint_occurrences(Line, Pattern, Painted)
     ).
-
-

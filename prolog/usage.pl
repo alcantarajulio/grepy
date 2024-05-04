@@ -1,3 +1,5 @@
+:- module(usage, [usage/0]).
+
 % Define options and their descriptions
 option('-c', '--count', 'Exibe a contagem dos padrões casados.').
 option('-r', '--recursive', 'Procura pelo padrão nos arquivos do diretório passado como parâmetro, recursivamente.').
