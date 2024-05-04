@@ -1,7 +1,6 @@
 :- use_module(dispatch).
 :- use_module(usage).
 :- use_module(utils).
-:- use_module(utils).
 :- use_module(io).
 % :- use_module().
 
@@ -59,7 +58,6 @@ handle_args([Arg1, Arg2, Arg3, Arg4], Result) :-
 main :-
     current_prolog_flag(argv, Argv),
     handle_args(Argv, Result),
-    writeln(Result),
     halt.
 
 :- initialization(main).

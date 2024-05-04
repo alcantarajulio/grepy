@@ -5,7 +5,7 @@
 :- use_module(count).
 
 % Finds and paints lines with the pattern, returning a list of painted lines
-find_lines_with_paint(Pattern, Text, PaintedLines) :-
+grepy(Pattern, Text, PaintedLines) :-
     split_string(Text, "\n", "", LinesList),  % Divides the text into lines
     format_corresponding_lines(LinesList, Pattern, PaintedLines).  % Processes each line and accumulates the painted ones
 

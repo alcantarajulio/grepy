@@ -1,4 +1,4 @@
-:- module(utils, [file_exists/1, is_recursive/1]).
+:- module(utils, [file_exists/1, is_recursive/1, print_lines/1]).
 
 file_exists(File) :- 
     exists_file(File).
