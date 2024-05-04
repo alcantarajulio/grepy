@@ -1,34 +1,34 @@
-:- module(format, [pinta_linha_inteira/3, pinta_ocorrencias/3]).
+:- module(format, [paint_whole_line/3, paint_occurrences/3]).
 
 :- use_module(library(pcre)).
 
-:- dynamic delimitador/1, fim_delimitador/1.
-delimitador('\e[31m').  % Código ANSI para texto vermelho
-fim_delimitador('\e[0m').  % Código ANSI para resetar a formatação
+:- dynamic delimiter/1, end_delimiter/1.
+delimiter('\e[31m').  % ANSI code for red text
+end_delimiter('\e[0m').  % ANSI code to reset formatting
 
-% pinta o pattern
-pinta_linha_inteira(Text, Pattern, PaintedText) :-
-    delimitador(Delim),
-    fim_delimitador(EndDelim),
+% paints the pattern
+paint_whole_line(Text, Pattern, PaintedText) :-
+    delimiter(Delim),
+    end_delimiter(EndDelim),
     (   re_match(Pattern, Text) 
     ->  atom_concat(Delim, Text, Start),
         atom_concat(Start, EndDelim, PaintedText)
     ;   PaintedText = Text
     ).
 
-% divide o texto em partes e pinta as partes que correspondem ao pattern
-pinta_ocorrencias(Text, Pattern, PaintedText) :-
-    delimitador(Delim),
-    fim_delimitador(EndDelim),
+% splits the text into parts and paints the parts that match the pattern
+paint_occurrences(Text, Pattern, PaintedText) :-
+    delimiter(Delim),
+    end_delimiter(EndDelim),
     re_split(Pattern, Text, Parts, [include_delimiter(true)]),
-    pinta_partes(Parts, Pattern, Delim, EndDelim, PaintedText).
+    paint_parts(Parts, Pattern, Delim, EndDelim, PaintedText).
 
-pinta_partes([], _, _, _, "").
-pinta_partes([Part|Rest], Pattern, Delim, EndDelim, PaintedText) :-
+paint_parts([], _, _, _, "").
+paint_parts([Part|Rest], Pattern, Delim, EndDelim, PaintedText) :-
     (   re_match(Pattern, Part) 
     ->  atom_concat(Delim, Part, PartStart),
         atom_concat(PartStart, EndDelim, PaintedPart)
     ;   PaintedPart = Part
     ),
-    pinta_partes(Rest, Pattern, Delim, EndDelim, PaintedRest),
+    paint_parts(Rest, Pattern, Delim, EndDelim, PaintedRest),
     atom_concat(PaintedPart, PaintedRest, PaintedText).
