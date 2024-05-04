@@ -20,4 +20,4 @@ show_options :-
     format('~w, ~w~30|~w~n', [Short, Long, Description]),
     fail.
 show_options.  % The final true is implicit here after fail
-    
+
