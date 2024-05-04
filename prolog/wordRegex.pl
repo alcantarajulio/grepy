@@ -2,4 +2,4 @@
 
 % Gera uma regex para buscar a palavra como um termo independente, ignorando maiúsculas e minúsculas
 gerar_regex(Palavra, Regex) :-
-    format(atom(Regex), '(?i)\\b~w\\b', [Palavra]).
+    format(atom(Regex), '\\b~w\\b', [Palavra]).

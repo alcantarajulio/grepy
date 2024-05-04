@@ -1,6 +1,8 @@
 :- use_module(dispatch).
 :- use_module(usage).
 :- use_module(utils).
+:- use_module(utils).
+:- use_module(io).
 % :- use_module().
 
 % parse_args :-
@@ -30,7 +32,9 @@ handle_args([Arg1], Result) :-
 % grepy <pattern> file_path
 % grepy <pattern> stdin
 handle_args([Arg1, Arg2], Result) :-
-    writeln("oi").
+    writeln("oi"),
+    go(Arg2, Out),
+    dispatch(Arg1, Out, Result).
     %(file_exists(Arg2) -> (% ler o arquivo e jogar pro dispatch); dispatch(Arg1, Arg2, Result)).
 
 % grepy --count <pattern> file_path

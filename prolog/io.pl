@@ -1,6 +1,7 @@
+:- module(io, [go/2]).
+
 :- use_module(library(pio)).
 :- use_module(library(dcg/basics)).
-:- initialization(go, main).
 
 quoted([]) --> eos.
 quoted([Line|Ls]) --> string(Chars),
@@ -8,12 +9,6 @@ quoted([Line|Ls]) --> string(Chars),
                        atom_chars(Line, Quoted) },
                       eol, quoted(Ls).
 
-go:-
-    once(phrase_from_file(quoted(Lines), 'data.txt')),
-
-    atomics_to_string(Lines, '\n', Out),
-
-    open('t.txt', write, Stream),
-    write(Stream, Out),
-    nl(Stream),
-    close(Stream). 
+go(FilePath, Out):-
+    once(phrase_from_file(quoted(Lines), FilePath)),
+    atomics_to_string(Lines, '\n', Out).

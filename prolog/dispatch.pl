@@ -22,11 +22,11 @@ dispatch('-c', Pattern, Content,Result ) :-
 
 % Wordregexp.
 dispatch('--wordregexp', Pattern, Content, Result) :-
-    gerar_regex(regex, Pattern),
-    grepy(regex, Content, Result).
+    gerar_regex(Pattern, Regex),
+    grepy(Regex, Content, Result).
 dispatch('-w', Pattern, Content, Result) :-
-    gerar_regex(regex, Pattern),
-    grepy(regex, Content, Result).
+    gerar_regex(Pattern, Regex),
+    grepy(Regex, Content, Result).
 
 % Recurssive
 dispatchRecursive('--recursive', Pattern, Path, Result) :-
