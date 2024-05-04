@@ -21,3 +21,5 @@ choose_paint(Line, Pattern, Painted) :-
     ->  paint_whole_line(Line, Pattern, Painted)
     ;   paint_occurrences(Line, Pattern, Painted)
     ).
+
+
