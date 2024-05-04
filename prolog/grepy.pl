@@ -1,38 +1,23 @@
 :- use_module(format).
 
+% Finds and paints lines with the pattern, returning a list of painted lines
+find_lines_with_paint(Pattern, Text, PaintedLines) :-
+    split_string(Text, "\n", "", LinesList),  % Divides the text into lines
+    format_corresponding_lines(LinesList, Pattern, PaintedLines).  % Processes each line and accumulates the painted ones
 
-% Encontra e pinta linhas com o padrão, retornando uma lista de linhas pintadas
-encontrar_linhas_com_pintura(Padrao, Texto, LinhasPintadas) :-
-    split_string(Texto, "\n", "", ListaLinhas),  % Divide o texto em linhas
-    formatar_linhas_correspondentes(ListaLinhas, Padrao, LinhasPintadas).  % Processa cada linha e acumula as pintadas
-
-% Processa cada linha recursivamente, verifica o padrão e aplica a pintura apropriada
-formatar_linhas_correspondentes([], _, []).
-formatar_linhas_correspondentes([Linha|Resto], Padrao, LinhasPintadas) :-
-    (   re_match(Padrao, Linha)  % Verifica se o padrão corresponde em algum lugar na linha
-    ->  escolher_pintura(Linha, Padrao, Pintada),
-        LinhasPintadas = [Pintada|OutrasLinhasPintadas],  % Inclui a linha pintada na lista de retorno
-        format("Linha formatada: ~w~n", [Pintada])  % Imprime a linha formatada para verificação
-    ;   LinhasPintadas = OutrasLinhasPintadas
+% Recursively processes each line, checks the pattern, and applies appropriate painting
+format_corresponding_lines([], _, []).
+format_corresponding_lines([Line|Rest], Pattern, PaintedLines) :-
+    (   re_match(Pattern, Line)  % Checks if the pattern matches anywhere in the line
+    ->  choose_paint(Line, Pattern, Painted),
+        PaintedLines = [Painted|OtherPaintedLines]  % Includes the painted line in the return list
+    ;   PaintedLines = OtherPaintedLines
     ),
-    formatar_linhas_correspondentes(Resto, Padrao, OutrasLinhasPintadas).
+    format_corresponding_lines(Rest, Pattern, OtherPaintedLines).
 
-% Escolhe entre pintar toda a linha ou apenas as ocorrências
-escolher_pintura(Linha, Padrao, Pintada) :-
-    (   re_match("^L", Padrao)  % Se o padrão é para pintar toda a linha
-    ->  pinta_linha_inteira(Linha, Padrao, Pintada)
-    ;   pinta_ocorrencias(Linha, Padrao, Pintada)
+% Chooses between painting the entire line or just the occurrences
+choose_paint(Line, Pattern, Painted) :-
+    (   re_match("^L", Pattern)  % If the pattern is to paint the entire line
+    ->  paint_whole_line(Line, Pattern, Painted)
+    ;   paint_occurrences(Line, Pattern, Painted)
     ).
-
-teste_encontrar_e_pintar_e_contar_linhas :-
-    Texto = "prova de plp\nparadigmas de linguagem de programaçao (plp)\nplpelegal\nPLP e coisa de gente boa\nCDG",
-    Palavra = "a",
-    % gerar_regex(Palavra, Padrao),  % Gera a regex apropriada para a palavra
-    encontrar_linhas_com_pintura(Palavra, Texto, LinhasPintadas),
-    %contar_linhas(LinhasPintadas, Contagem),
-    %format("Regex usada: ~w~n", [Padrao]),
-    format("Linhas pintadas: ~w~n", [LinhasPintadas]),
-    %format("Número de linhas com correspondências: ~d~n", [Contagem]),
-    halt.
-
-:- initialization(teste_encontrar_e_pintar_e_contar_linhas).
