@@ -1,6 +1,5 @@
 :- use_module(library(pio)).
 :- use_module(library(dcg/basics)).
-
 :- initialization(go, main).
 
 quoted([]) --> eos.
