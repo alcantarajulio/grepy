@@ -11,8 +11,7 @@ quoted([Line|Ls]) --> string(Chars),
 go:-
     once(phrase_from_file(quoted(Lines), 'data.txt')),
 
-    atomics_to_string(Lines, '\n', Out),
-
+    atomics_to_string(Lines, '"\n"', Out),
     open('t.txt', write, Stream),
     write(Stream, Out),
     nl(Stream),
