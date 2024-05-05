@@ -4,6 +4,7 @@
 :- use_module(utils).
 :- use_module(count).
 :- use_module(wordRegex).
+:- use_module(recursive).
 
 % Usages
 dispatch('--help', Result) :- usage(Result).
@@ -30,13 +31,12 @@ dispatch('-w', Pattern, Content, Result) :-
 
 % Recursive
 dispatchRecursive('--recursive', Pattern, Path, Result) :-
-    recursive(Pattern, Path, Result).
+    recursive_grepy(Pattern, Path, Result).
 dispatchRecursive('-r', Pattern, Path, Result) :-
-    recursive(Pattern, Path, Result).
+    recursive_grepy(Pattern, Path, Result).
 
 % Recursive Exclude
 dispatchRecursiveExclude('--recursive-exclude', Pattern, FilePath, Path ,Result) :-
     recursive(Pattern, FilePath, Path, Result).
 dispatchRecursiveExclude('-e', Pattern, FilePath, Path ,Result) :-
     recursive(Pattern, FilePath, Path, Result).
- 

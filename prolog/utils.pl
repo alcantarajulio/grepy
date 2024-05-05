@@ -1,4 +1,13 @@
-:- module(utils, [file_exists/1, isFlag/1, verifyRecursivesCases/1, usage/1, from_stdin/0, stdin_reader/1]).
+:- module(utils, [file_exists/1, 
+                isFlag/1, 
+                verifyRecursivesCases/1, 
+                verifyInput/1, 
+                usage/1, 
+                from_stdin/0, 
+                stdin_reader/1, 
+                xor/2,
+                convert_array_to_string/2,
+                atom_to_string/2]).
 
 :- use_module(library(tty)).
 
@@ -12,12 +21,14 @@ from_stdin :-
 
 
 isFlag(Flag) :-
-    member(Flag, ["--count", "-c", "--help", "-h",
-                  "--word-regexp", "-w", "--recursive", "-r",
-                  "--recursive-exclude", "-e"]).
+    List = ['--count', '-c', '--help', '-h', '--word-regexp', '-w', '--recursive', '--recursive-exclude', '-e'],
+    member(Flag, List).
 
 verifyRecursivesCases(Flag) :-
-    member(Flag, ["--recursive", "-r", "--recursive-exclude", "-e"]).
+    member(Flag, ['--recursive', '-r', '--recursive-exclude', '-e']).
+
+verifyInput(Args) :-
+    xor(from_stdin, file_exists(Args)).
 
 usage(Return):-
     Return="Usage: grepy [-c | --count] [-r | --recursive] 
@@ -32,11 +43,11 @@ options:
 -h, --help               Mostra a mensagem de uso do programa.".
 
 
-% xor(true, false).
-% xor(false, true).
+xor(true, false).
+xor(false, true).
 
-% xor(A, B) :-
-%     dif(A, B).
+xor(A, B) :-
+    dif(A, B).
 
 
 
@@ -48,14 +59,12 @@ options:
 %     split_string(Str, "\n", "\n", Lines).
 
 
-stdin_reader(String) :-
-    stream_lines('teste.txt', String).
+stdin_reader(Result) :-
+    stream_lines(user_input, Result).
 
-stream_lines(FileName, String) :-
-    open(FileName, read, Stream),
-    read_lines(Stream, Lines),
-    atomic_list_concat(Lines, '\n', String),
-    close(Stream).
+stream_lines(Input, Lines) :-
+    read_string(Input, _, String),
+    split_string(String, "\n", "\n", Lines).
 
 read_lines(Stream, []) :-
     at_end_of_stream(Stream).
@@ -63,3 +72,13 @@ read_lines(Stream, [Line|Rest]) :-
     \+ at_end_of_stream(Stream),
     read_line_to_string(Stream, Line),
     read_lines(Stream, Rest).
+
+convert_array_to_string([], '').
+convert_array_to_string([X], X).
+convert_array_to_string([X|Xs], String) :-
+    convert_array_to_string(Xs, Rest),
+    string_concat(X, '\n', LineWithNewLine),
+    string_concat(LineWithNewLine, Rest, String).
+
+atom_to_string(Atom, String) :-
+    atom_chars(Atom, String).

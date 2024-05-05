@@ -1,3 +1,5 @@
+:- module(recursive, [recusive_grepy/2, recursive_exclude_grepy/2]).
+
 :- use_module(library(filesex)).
 :- use_module(library(pcre)).
 :- use_module(format).

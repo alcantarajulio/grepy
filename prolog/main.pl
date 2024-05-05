@@ -9,7 +9,14 @@ handle_args([], Result) :-
 % grepy -h
 % grepy <pattern> stdin
 handle_args([Arg1], Result) :-
-    (from_stdin -> (stdin_reader(StdinReturn), writeln(StdinReturn));usage(Result)).
+    (verifyInput(Arg1) -> 
+        (from_stdin ->
+            stdin_reader(StdinReturn),
+            convert_array_to_string(StdinReturn, Out),
+            (dispatch(Arg1, Out, Result) -> true ; usage(Result))
+        ; usage(Result))
+    ; usage(Result)).
+    % (from_stdin -> (stdin_reader(StdinReturn), writeln(StdinReturn));usage(Result)).
 
 % grepy <pattern> file_path
 % grepy --count <pattern> stdin
@@ -17,8 +24,20 @@ handle_args([Arg1], Result) :-
 % grepy -word-regexp <pattern> stdin
 % grepy -w <pattern> stdin
 handle_args([Arg1, Arg2], Result) :-
-    (from_stdin -> (stdin_reader(StdinReturn),dispatch(Arg1, Arg2, StdinReturn, Result)); (file_exists(Arg2) -> go(Arg2,ReturnIO),dispatch(Arg1, ReturnIO, Result); usage(Result))),
-    writeln(ReturnIO).
+    % (isFlag(Arg1) -> writeln(oi) ; writeln(nao)).
+    (from_stdin ->
+        (isFlag(Arg1) ->
+            stdin_reader(StdinReturn),
+            convert_array_to_string(StdinReturn, Out),
+            (dispatch(Arg1, Arg2, Out, Result) -> true ; usage(Result))
+        ; usage(Result))
+    ; (file_exists(Arg2) ->
+        go(Arg2, FileReturn),
+        (dispatch(Arg1, FileReturn, Result) -> true ; usage(Result))
+        ; usage(Result))).
+
+    % (from_stdin -> (stdin_reader(StdinReturn),dispatch(Arg1, Arg2, StdinReturn, Result)); (file_exists(Arg2) -> go(Arg2,ReturnIO),dispatch(Arg1, ReturnIO, Result); usage(Result))),
+    % writeln(ReturnIO).
 
 
 % grepy --count <pattern> file_path
@@ -28,11 +47,18 @@ handle_args([Arg1, Arg2], Result) :-
 % grepy --recursive <pattern> dir_path
 % grepy -r <pattern> dir_path
 handle_args([Arg1, Arg2, Arg3], Result) :-
-    (isFlag(Arg1) -> 
-        (file_exists(Arg3) ->
-            (go(Arg3, ResultIO), dispatch(Arg1,Arg2,ResultIO,Result)); (verifyRecursivesCases(Arg1) -> dispatchRecursive(Arg1, Arg2, Arg3, Result)
-        ; usage(Result)))
-    ; usage(Result)).
+    (verifyRecursivesCases(Arg1) ->
+        (dispatchRecursive(Arg1, Arg2, Arg3, Result) -> true ; usage(Result))
+    ; (file_exists(Arg3) ->
+        go(Arg3, FileReturn),
+        (dispatch(Arg1, Arg2, FileReturn, Result) -> true; usage(Result))
+        ; usage(Result))).
+   
+    % (isFlag(/Arg1) -> 
+    %     (file_exists(Arg3) ->
+    %         (go(Arg3, ResultIO), dispatch(Arg1,Arg2,ResultIO,Result)); (verifyRecursivesCases(Arg1) -> dispatchRecursive(Arg1, Arg2, Arg3, Result)
+    %     ; usage(Result)))
+    % ; usage(Result)).
     
     % (isFlag(Arg1) -> 
     % ((is_recursive(Arg1) -> 
