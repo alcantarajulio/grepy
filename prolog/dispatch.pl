@@ -20,21 +20,21 @@ dispatch('-c', Pattern, Content, Result ) :-
     grepy(Pattern, Content, ParcialResult),
     contar_linhas(ParcialResult, Result). 
 
-% Wordregexp.
-dispatch('--wordregexp', Pattern, Content, Result) :-
+% Word-regexp.
+dispatch('--word-regexp', Pattern, Content, Result) :-
     gerar_regex(Pattern, Regex),
     grepy(Regex, Content, Result).
 dispatch('-w', Pattern, Content, Result) :-
     gerar_regex(Pattern, Regex),
     grepy(Regex, Content, Result).
 
-% Recurssive
+% Recursive
 dispatchRecursive('--recursive', Pattern, Path, Result) :-
     recursive(Pattern, Path, Result).
 dispatchRecursive('-r', Pattern, Path, Result) :-
     recursive(Pattern, Path, Result).
 
-% Recurssive Exclude
+% Recursive Exclude
 dispatchRecursiveExclude('--recursive-exclude', Pattern, FilePath, Path ,Result) :-
     recursive(Pattern, FilePath, Path, Result).
 dispatchRecursiveExclude('-e', Pattern, FilePath, Path ,Result) :-
