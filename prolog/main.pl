@@ -69,7 +69,10 @@ handle_args([Arg1, Arg2, Arg3], Result) :-
 % grepy --recursive-exclude <pattern> file_path dir_path
 % grepy -e <pattern> file_path dir_path
 handle_args([Arg1, Arg2, Arg3, Arg4], Result) :-
-    (dispatchRecurssiveExclude(Arg1,Arg2,Arg3,Arg4,Result);usage(Result)).
+    (verifyRecursivesCases(Arg1) -> 
+        (dispatchRecursiveExclude(Arg1,Arg2, Arg3, Arg4, Result) -> true ; usage(Result))
+    ; usage(Result)).
+    % (dispatchRecurssiveExclude(Arg1,Arg2,Arg3,Arg4,Result);usage(Result)).
 
 main :-
   
