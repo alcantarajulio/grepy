@@ -30,13 +30,13 @@ dispatch('-w', Pattern, Content, Result) :-
 
 % Recurssive
 dispatchRecursive('--recursive', Pattern, Path, Result) :-
-    recurssive(Pattern, Path, Result).
+    recursive(Pattern, Path, Result).
 dispatchRecursive('-r', Pattern, Path, Result) :-
-    recurssive(Pattern, Path, Result).
+    recursive(Pattern, Path, Result).
 
 % Recurssive Exclude
 dispatchRecursiveExclude('--recursive-exclude', Pattern, FilePath, Path ,Result) :-
-    recurssive(Pattern, FilePath, Path, Result).
+    recursive(Pattern, FilePath, Path, Result).
 dispatchRecursiveExclude('-e', Pattern, FilePath, Path ,Result) :-
-    recurssive(Pattern, FilePath, Path, Result).
+    recursive(Pattern, FilePath, Path, Result).
  

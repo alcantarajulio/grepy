@@ -1,7 +1,7 @@
 :- module(usage, [usage/1]).
 
 usage(Return):-
-    Return= "Usage: grepy [-c | --count] [-r | --recursive] 
+    Return="Usage: grepy [-c | --count] [-r | --recursive] 
        [-w | --word-regexp] [-e | --exclude] [-h | --help] <file> 
 O grepy procura por casamento dos padrões nos arquivos ou string passadas como entrada para o programa.
 
