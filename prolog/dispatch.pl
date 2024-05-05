@@ -1,7 +1,7 @@
 :- module(dispatch, [dispatch/2,dispatch/3, dispatch/4, dispatchRecursive/4, dispatchRecursiveExclude/5]).
 
 :- use_module(grepy).
-:- use_module(usage).
+:- use_module(utils).
 :- use_module(count).
 :- use_module(wordRegex).
 

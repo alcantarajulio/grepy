@@ -1,8 +1,6 @@
 :- use_module(dispatch).
-:- use_module(usage).
 :- use_module(utils).
 :- use_module(io).
-:- use_module(usage).
 
 % grepy
 handle_args([], Result) :-
