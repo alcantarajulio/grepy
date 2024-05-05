@@ -7,8 +7,12 @@
 delimitador('\e[31m').  % ANSI code for red text
 fim_delimitador('\e[0m').  % ANSI code to reset formatting
 
+recursive_exclude_grepy(Pattern, ExcludedFilePath, DirPath) :-
+    forall(recursive_exclude(DirPath, ExcludedFilePath, FilePath),
+           process_file(FilePath, Pattern)).
+
 % Processes each file found recursively.
-process_files(DirPath, Pattern) :-
+recursive_grepy(Pattern, DirPath) :-
     forall(recursive(DirPath, FilePath),
            process_file(FilePath, Pattern)).
 
@@ -50,9 +54,16 @@ find_lines_with_paint(Pattern, Line, Painted) :-
     ).
 
 % Recursive function to find all files in a directory.
-recursive(Dir, Member) :-
-    directory_member(Dir, Member, [recursive(true)]),
-    exists_file(Member).
+recursive(Dir, File) :-
+    directory_member(Dir, File, [recursive(true)]),
+    exists_file(File).
+
+% Recursive function to find all files in a directory.
+recursive_exclude(Dir, FileExcluded, File) :-
+    directory_member(Dir, File, [recursive(true)]),
+    File \= FileExcluded,
+    exists_file(File).
 
 % Initialization and testing of the program.
-:- initialization(process_files('.', 'caralho')).
+% :- initialization(recursive_grepy('caralho', 'teste')).
+:- initialization(recursive_exclude_grepy('caralho', 'teste/file2.txt', 'teste')).
