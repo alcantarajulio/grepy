@@ -23,7 +23,7 @@ handle_args([Arg1, Arg2]) :-
         (isFlag(Arg1) ->
             stdin_reader(StdinReturn),
             convert_array_to_string(StdinReturn, Out),
-            (dispatch(Arg1, Arg2, Out, Result) -> print_strings(Result) ; usage(Result), writeln(Result))
+            (dispatch(Arg1, Arg2, Out, Result) -> (verifyCount(Arg1) -> writeln(Result); print_strings(Result)); usage(Result), writeln(Result))
         ; usage(Result), writeln(Result))
     ; (file_exists(Arg2) ->
         go(Arg2, FileReturn),
