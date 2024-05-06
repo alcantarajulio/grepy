@@ -7,7 +7,9 @@
                 stdin_reader/1, 
                 xor/2,
                 convert_array_to_string/2,
-                atom_to_string/2]).
+                atom_to_string/2,
+                verifyCount/1
+                ]).
 
 :- use_module(library(tty)).
 
@@ -26,6 +28,9 @@ isFlag(Flag) :-
 
 verifyRecursivesCases(Flag) :-
     member(Flag, ['--recursive', '-r', '--recursive-exclude', '-e']).
+
+verifyCount(Flag) :-
+    member(Flag, ['--count', '-c']).
 
 verifyInput(Args) :-
     xor(from_stdin, file_exists(Args)).
