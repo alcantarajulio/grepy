@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+swipl -g main -t halt "${HOME}/.local/src_grepy/main.pl" -- "$@" 
