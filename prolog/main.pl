@@ -1,30 +1,33 @@
 :- use_module(dispatch).
 :- use_module(utils).
 :- use_module(io).
+:- use_module(writer).
 
 % grepy
-handle_args([], Result) :-
-    usage(Result).
+handle_args([]) :-
+    usage(Result),
+    print_strings(Result).
 % grepy -help
 % grepy -h
 % grepy <pattern> stdin
-handle_args([Arg1], Result) :-
+handle_args([Arg1]) :-
     (verifyInput(Arg1) -> 
         (from_stdin ->
             stdin_reader(StdinReturn),
             convert_array_to_string(StdinReturn, Out),
             (dispatch(Arg1, Out, Result) -> true ; usage(Result))
         ; usage(Result))
-    ; usage(Result)).
-    % (from_stdin -> (stdin_reader(StdinReturn), writeln(StdinReturn));usage(Result)).
+    ; usage(Result)),
+    print_strings(Result).
+
 
 % grepy <pattern> file_path
 % grepy --count <pattern> stdin
 % grepy -c <pattern> stdin
 % grepy -word-regexp <pattern> stdin
 % grepy -w <pattern> stdin
-handle_args([Arg1, Arg2], Result) :-
-    % (isFlag(Arg1) -> writeln(oi) ; writeln(nao)).
+handle_args([Arg1, Arg2]) :-
+
     (from_stdin ->
         (isFlag(Arg1) ->
             stdin_reader(StdinReturn),
@@ -34,11 +37,8 @@ handle_args([Arg1, Arg2], Result) :-
     ; (file_exists(Arg2) ->
         go(Arg2, FileReturn),
         (dispatch(Arg1, FileReturn, Result) -> true ; usage(Result))
-        ; usage(Result))).
-
-    % (from_stdin -> (stdin_reader(StdinReturn),dispatch(Arg1, Arg2, StdinReturn, Result)); (file_exists(Arg2) -> go(Arg2,ReturnIO),dispatch(Arg1, ReturnIO, Result); usage(Result))),
-    % writeln(ReturnIO).
-
+        ; usage(Result))),
+    print_strings(Result).
 
 % grepy --count <pattern> file_path
 % grepy -c <pattern> file_path
@@ -46,49 +46,28 @@ handle_args([Arg1, Arg2], Result) :-
 % grepy -w <pattern> file_path
 % grepy --recursive <pattern> dir_path
 % grepy -r <pattern> dir_path
-handle_args([Arg1, Arg2, Arg3], Result) :-
+handle_args([Arg1, Arg2, Arg3]) :-
     (verifyRecursivesCases(Arg1) ->
-        (dispatchRecursive(Arg1, Arg2, Arg3, Result) -> true ; usage(Result))
+        (dispatchRecursive(Arg1, Arg2, Arg3) -> true ; usage(Result), print_strings(Result))
     ; (file_exists(Arg3) ->
         go(Arg3, FileReturn),
-        (dispatch(Arg1, Arg2, FileReturn, Result) -> true; usage(Result))
-        ; usage(Result))).
+        (dispatch(Arg1, Arg2, FileReturn, Result) -> print_strings(Result); usage(Result), print_strings(Result))
+        ; usage(Result), print_strings(Result))).
    
-    % (isFlag(/Arg1) -> 
-    %     (file_exists(Arg3) ->
-    %         (go(Arg3, ResultIO), dispatch(Arg1,Arg2,ResultIO,Result)); (verifyRecursivesCases(Arg1) -> dispatchRecursive(Arg1, Arg2, Arg3, Result)
-    %     ; usage(Result)))
-    % ; usage(Result)).
-    
-    % (isFlag(Arg1) -> 
-    % ((is_recursive(Arg1) -> 
-    %     dispatchRecursive(Arg1, Arg2, Arg3, Result);
-    %     (file_exists(Arg3) -> (go(Arg3, Out), dispatch(Arg1, Arg2, Out, Result)); dispatch(Arg1, Arg2, Arg3, Result))))
-    % ;usage(Result).
 
 % grepy --recursive-exclude <pattern> file_path dir_path
 % grepy -e <pattern> file_path dir_path
-handle_args([Arg1, Arg2, Arg3, Arg4], Result) :-
+handle_args([Arg1, Arg2, Arg3, Arg4]) :-
     (verifyRecursivesCases(Arg1) -> 
-        (dispatchRecursiveExclude(Arg1,Arg2, Arg3, Arg4, Result) -> true ; usage(Result))
-    ; usage(Result)).
-    % (dispatchRecurssiveExclude(Arg1,Arg2,Arg3,Arg4,Result);usage(Result)).
+        (dispatchRecursiveExclude(Arg1,Arg2, Arg3, Arg4) -> true ; usage(Result), print_strings(Result))
+    ; usage(Result), print_strings(Result)).
+
 
 main :-
   
     current_prolog_flag(argv, Argv),
-    handle_args(Argv, Result),
-    writeln(Result),
+    handle_args(Argv),
     halt.
 
-      % leitor(Result),
-    % writeln(Result).
-
-% leitor([Line|Tail]):-
-% read_line_to_string(user_input,Line),
-%     (   Line \= end_of_file -> 
-%         leitor(Tail);
-%         true
-%     ).
 
 :- initialization(main).

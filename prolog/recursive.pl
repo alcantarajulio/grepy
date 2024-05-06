@@ -1,4 +1,4 @@
-:- module(recursive, [recusive_grepy/2, recursive_exclude_grepy/2]).
+:- module(recursive, [recursive_grepy/2, recursive_exclude_grepy/3]).
 
 :- use_module(library(filesex)).
 :- use_module(library(pcre)).
@@ -68,4 +68,4 @@ recursive_exclude(Dir, FileExcluded, File) :-
 
 % Initialization and testing of the program.
 % :- initialization(recursive_grepy('caralho', 'teste')).
-:- initialization(recursive_exclude_grepy('caralho', 'teste/file2.txt', 'teste')).
+% :- initialization(recursive_exclude_grepy('caralho', 'teste/file2.txt', 'teste')).

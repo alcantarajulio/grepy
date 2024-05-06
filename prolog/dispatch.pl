@@ -1,4 +1,4 @@
-:- module(dispatch, [dispatch/2,dispatch/3, dispatch/4, dispatchRecursive/4, dispatchRecursiveExclude/5]).
+:- module(dispatch, [dispatch/2,dispatch/3, dispatch/4, dispatchRecursive/3, dispatchRecursiveExclude/4]).
 
 :- use_module(grepy).
 :- use_module(utils).
@@ -30,13 +30,13 @@ dispatch('-w', Pattern, Content, Result) :-
     grepy(Regex, Content, Result).
 
 % Recursive
-dispatchRecursive('--recursive', Pattern, Path, Result) :-
-    recursive_grepy(Pattern, Path, Result).
-dispatchRecursive('-r', Pattern, Path, Result) :-
-    recursive_grepy(Pattern, Path, Result).
+dispatchRecursive('--recursive', Pattern, Path) :-
+    recursive_grepy(Pattern, Path).
+dispatchRecursive('-r', Pattern, Path) :-
+    recursive_grepy(Pattern, Path).
 
 % Recursive Exclude
-dispatchRecursiveExclude('--recursive-exclude', Pattern, FilePath, Path ,Result) :-
-    recursive(Pattern, FilePath, Path, Result).
-dispatchRecursiveExclude('-e', Pattern, FilePath, Path ,Result) :-
-    recursive(Pattern, FilePath, Path, Result).
+dispatchRecursiveExclude('--recursive-exclude', Pattern, FilePath, Path) :-
+    recursive_exclude_grepy(Pattern, FilePath, Path).
+dispatchRecursiveExclude('-e', Pattern, FilePath, Path) :-
+    recursive_exclude_grepy(Pattern, FilePath, Path).
