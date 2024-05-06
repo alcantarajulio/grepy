@@ -50,15 +50,6 @@ xor(A, B) :-
     dif(A, B).
 
 
-
-% stdin_reader(Lines) :-
-%     stream_lines(user_input, Lines).
-
-% stream_lines(In, Lines) :-
-%     read_string(In, _, Str),
-%     split_string(Str, "\n", "\n", Lines).
-
-
 stdin_reader(Result) :-
     stream_lines(user_input, Result).
 
