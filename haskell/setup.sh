@@ -1,6 +1,6 @@
 #!/bin/bash
 
-WORK_DIR="$(pwd)/haskell/grepy"
+WORK_DIR="$(pwd)/grepy"
 
 # Ensure ~/.local/bin is in PATH
 if [[ ! $(echo $PATH | grep "/.local/bin") ]]; then
@@ -9,6 +9,6 @@ if [[ ! $(echo $PATH | grep "/.local/bin") ]]; then
 fi
 
 cd $WORK_DIR
-stack build --copy-bins > /dev/null
+stack build --copy-bins &> /dev/null
 mv ~/.local/bin/grepy-exe ~/.local/bin/grepy
 chmod +x ~/.local/bin/grepy

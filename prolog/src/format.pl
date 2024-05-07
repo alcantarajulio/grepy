@@ -3,10 +3,10 @@
 :- use_module(library(pcre)).
 
 :- dynamic delimiter/1, end_delimiter/1.
-delimiter('\e[31m').  % ANSI code for red text
-end_delimiter('\e[0m').  % ANSI code to reset formatting
+delimiter('\e[31m').
+end_delimiter('\e[0m').
 
-% paints the pattern
+
 paint_whole_line(Text, Pattern, PaintedText) :-
     delimiter(Delim),
     end_delimiter(EndDelim),
@@ -16,7 +16,6 @@ paint_whole_line(Text, Pattern, PaintedText) :-
     ;   PaintedText = Text
     ).
 
-% splits the text into parts and paints the parts that match the pattern
 paint_occurrences(Text, Pattern, PaintedText) :-
     delimiter(Delim),
     end_delimiter(EndDelim),
